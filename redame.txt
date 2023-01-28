@@ -1,1 +1,84 @@
-helo
+//Nodejs expressJs TypeScript
+
+npm init --yes
+
+When you initialize a package.json file, the --yes flag uses the default settings you have set up from npm config. The newly created package.json file might look something like the following code:
+
+{
+  "name": "express-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+Create a minimal server with Express
+
+
+Next, to trigger a minimal server, create a new file called index.js at the root of the project with the following code:
+
+const express = require('express');
+
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Express + TypeScript Server');
+});
+
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});
+
+
+
+Installing TypeScript
+We’ll start by installing TypeScript as a dev dependency. Along with it, we’ll install the the @types declaration packages for Express and Node.js, which provide type definitions in the form of declaration files.
+
+Declaration files are predefined modules that describe the shape of JavaScript values, or the types present, for the TypeScript compiler. Type declarations are usually contained in files with a .d.ts extension. These declaration files are available for all libraries that were originally written in JavaScript, not TypeScript.
+
+The DefinitelyTyped GitHub repository maintains the TypeScript type definitions for use directly in Node.js and other JavaScript projects, so you don’t have to define these types from scratch. To add these types or the declaration files related to a particular library or a module, you have to look for the packages that start with the @types namespace.
+
+Open the terminal window and install the packages described above with the following command:
+
+npm i -D typescript @types/express @types/node
+
+The -D flag, also known as the --dev flag, is a specification for the package manager to install these libraries as devDependencies.
+
+
+Generating tsconfig.json
+Now, we have a TypeScript project compiled with some default configuration options. The tsconfig.json file provides these default options and also provides us with the ability to tweak or customize the compiler options.
+
+Typically, the tsconfig.json file lives at the root of the project. To generate it, we’ll use the tsc command:
+
+npx tsc --init
+
+
+
+
+If you open the tsconfig.json file, you’ll see a lot of other compiler options that are commented out. In tsconfig.json, compilerOptions is a mandatory field that needs to be specified. The options used in the config above are:
+
+target: Allows us to specify the target JavaScript version that the compiler will output
+module: Allows us to use a module manager in the compiled JavaScript code. CommonJS is supported and is a standard in Node.js
+strict: An option that enables strict type-checking options
+esModuleInterop: Allows us to compile ES6 modules to CommonJS modules
+skipLibCheck: If set to true, skips type-checking of default library declaration files
+forceConsistentCasingInFileNames: When set to true, enables case sensitive file naming
+One option that you will have to enable is called outDir, which specifies where the output will be located after the compilation step. You can search for this option in the tsconfig.json file and uncomment it.
+
+By default, the value of this option is set to the root directory. Change it to dist:
+
+{
+  "compilerOptions": {
+    "outDir": "./dist"
+
+    // rest options remain same
+  }
+}
