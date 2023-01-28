@@ -1,6 +1,7 @@
 const express = require("express");
 const connect = require("./config/db");
 const user = require("./controller/user");
+const category = require("./controller/category");
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/", user);
+app.use("/", category);
 
 //server created
 app.listen(3000, async (req, res) => {

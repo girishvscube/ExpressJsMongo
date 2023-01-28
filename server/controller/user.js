@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
 
     let token = await jwt.sign(payload, "hello", { expiresIn: 360000 });
     if (!token) {
-      return res.status(500).send({ message: "Internal Server Error" });
+      return res.status(500).send({ message: "Token has issue" });
     }
 
     let userObj = {
@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
     };
     return res.send(userObj);
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({ message: err });
   }
 });
 
